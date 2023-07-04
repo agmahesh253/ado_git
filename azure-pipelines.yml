@@ -1,0 +1,24 @@
+trigger:
+  branches:
+    include:
+      - none
+
+jobs:
+  - job: PushToGitHub
+    displayName: 'Push to GitHub'
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - checkout: self
+
+      - script: |
+          git config --global user.email "agmahesh253@gmail.com"
+          git config --global user.name "agmahesh253"
+          git remote remove origin || true
+          git remote add origin https://github.com/agmahesh253/ado_git.git
+          git remote set-url --add --push origin https://agmahesh253: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@github.com/agmahesh253/ado_git.git
+          git remote -v
+          git pull --rebase origin main
+          git push origin HEAD:main --force
+        displayName: 'Push to GitHub'
